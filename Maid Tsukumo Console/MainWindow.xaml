@@ -1,0 +1,23 @@
+﻿<Window x:Class="Maid_Tsukumo_Console.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Maid_Tsukumo_Console"
+        mc:Ignorable="d"
+        Title="Project -冥土- Code 津雲 Interface Console" Height="540" Width="960
+        " Background="#FF323232">
+    <Grid>
+        <TextBox x:Name="Input" Height="20" Margin="105,0,0,22" TextWrapping="Wrap" VerticalAlignment="Bottom" Background="#7F000000" BorderBrush="White" Foreground="Cyan" SelectionBrush="Cyan"/>
+        <Border BorderBrush="White" BorderThickness="1" Margin="0,0,0,47">
+            <ScrollViewer x:Name="Scroll" Margin="0" Background="#7F000000">
+                <TextBlock x:Name="Logger" TextWrapping="Wrap" Foreground="Cyan"/>
+            </ScrollViewer>
+        </Border>
+        <Border BorderBrush="White" VerticalAlignment="Bottom" BorderThickness="1">
+            <TextBlock x:Name="State" TextWrapping="Wrap" VerticalAlignment="Bottom" Background="#7F000000" Foreground="Cyan" Height="15"/>
+        </Border>
+        <TextBox x:Name="Type" Height="20" Margin="0,0,852,22" TextWrapping="Wrap" VerticalAlignment="Bottom" Background="#7F000000" BorderBrush="White" Foreground="Cyan" SelectionBrush="Cyan"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,29 @@
+﻿<Window x:Name="Window" x:Class="nse.Console"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:nse"
+        mc:Ignorable="d"
+        Title="Norito Script Executer Console"
+        Height="540" Width="960"
+        Background="#00000000" 
+        Visibility="Visible" 
+        WindowStyle="SingleBorderWindow" 
+        ResizeMode="CanResizeWithGrip" 
+        WindowState="Normal" 
+        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+        >
+    <Grid>
+        <RichTextBox
+            x:Name="Console_IO"
+            Background="#00000000" BorderBrush="#00000000" Foreground="Cyan" SelectionBrush="Cyan" SelectionTextBrush="Black" CaretBrush="Cyan" OpacityMask="Cyan"
+            VerticalAlignment="Bottom" DockPanel.Dock="Bottom"
+            />
+        <TextBlock
+            x:Name="Debug"
+            Background="#00000000" Foreground="Red" OpacityMask="Cyan"
+            HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"
+            />
+    </Grid>
+</Window>
