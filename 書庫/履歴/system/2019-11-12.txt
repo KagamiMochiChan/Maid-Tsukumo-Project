@@ -1,0 +1,8 @@
+﻿[2019/11/12 11:56:41.5195][INFO][CORE]System Booting
+[2019/11/12 11:56:41.5865][DEBUG][CORE]Loading Logger
+[2019/11/12 11:56:41.6055][DEBUG][CORE]Loading Executer
+[2019/11/12 11:56:41.6345][INFO][CORE]Brain Booting
+[2019/11/12 11:56:47.3902][DEBUG][Executer]takahashi
+[2019/11/12 11:56:47.3962][DEBUG][Executer]takahashi
+[2019/11/12 11:56:47.4032][DEBUG][Executer]takahashi
+[2019/11/12 11:56:47.6773][DEBUG][Executer]神具 TAKAHASHI を使う
