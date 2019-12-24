@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from tkinter import messagebox
 import sys
+if __name__ == "__main__":
+    sys.stdin = open(sys.stdin.fileno(), encoding="utf-8", closefd=False)
+    sys.stdout = open(sys.stdout.fileno(), 'w', encoding="utf-8", closefd=False)
 
-sys.stdin = open(sys.stdin.fileno(), encoding="utf-8", closefd=False)
-sys.stdout = open(sys.stdout.fileno(), 'w', encoding="utf-8", closefd=False)
-
-input()
-print("LOG:INFO:Wake Up Brain")
-print("LOG:DEBUG:Loading Library")
+if __name__ == "__main__":
+    input()
+    print("LOG:INFO:Wake Up Brain")
+    print("LOG:DEBUG:Loading Library")
 import csv
 import logging
 import os
@@ -17,16 +18,16 @@ import MeCab
 import numpy as np
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
-print("Loading MeCab")
-mt = MeCab.Tagger('-Owakati')
-mt.parse('')
+if __name__ == "__main__":
+    print("Loading MeCab")
+    mt = MeCab.Tagger('-Owakati')
+    mt.parse('')
 
-pattern = dict()
-model = Doc2Vec.load("model")
-min_sim = 0.5
+    pattern = dict()
+    model = Doc2Vec.load("model")
+    min_sim = 0.5
 
-def load_Pattern() -> None:
-    dir = "書庫\\辞書\\Tsukumo\\"
+def load_Pattern(dir:str = "書庫\\辞書\\Tsukumo\\") -> None:
     for path in os.listdir(dir):
         print(f"Loading Pattern <{path[0:-4]}>")
         with open(dir + path,mode="r",encoding="utf-8") as f:
@@ -70,41 +71,41 @@ def GetMost(word:str,type:str="talk") -> (float,int):
             index = pattern[type].index(s)
     return (sim,index)
 
+def AddDictionaly(key:str,value:str,type:str="talk"):
+    with open(f"書庫\\辞書\\Tsukumo\\{type}.csv", mode="a", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow([key,value])
+    pattern[type].append([mt.parse(key).split(" "), value])
 
-load_Pattern()
-
-
-print("END")
-try:
-    while True:
-        s = input()
-        print(f"Request <{s}>")
-        r = "RETURN:"
-        if s.startswith("TALK:"):
-            w = s.split(":",3)
-            if w[1] in pattern:
-                (sim,index) = GetMost(w[2],type=w[1])
-                print(f"Most Similar is {w[2]} <{sim}> {pattern[w[1]][index][2]} => {pattern[w[1]][index][1]}")
-                r += f"Most Similar is {w[2]} <{sim}> {pattern[w[1]][index][2]} => {pattern[w[1]][index][1]}" if sim < min_sim else pattern["talk"][index][1]
-        elif s.startswith("EXIT"):
-            break
-        elif s.startswith("RELOAD"):
-            load_Pattern()
-        elif s.startswith("RELEARN"):
-            learning_Model()
-        elif s.startswith("SET"):
-            w = s.split(":",3)
-            with open(f"書庫\\辞書\\Tsukumo\\{w[1]}.csv",mode="a",encoding="utf-8") as f:
-                writer = csv.writer(f)
-                writer.writerow([w[2],w[3]])
-            pattern[w[1]].append([mt.parse(w[2]).split(" "),w[3]])
-        else:
-            (sim,index) = GetMost(s)
-            print(f"Most Similar is {s} <{sim}> {pattern['talk'][index][2]} => {pattern['talk'][index][1]}")
-            r += f"Most Similar is {s} <{sim}> {pattern['talk'][index][2]} => {pattern['talk'][index][1]}" if sim < min_sim else pattern["talk"][index][1]
-        print("Request Waiting")
-        print(r)
-except Exception:
-    messagebox.showerror("Tsukumo Brain",f"ERROR:<{sys.exc_info()}>")
-
-messagebox.showerror("Tsukumo Brain","－－－－－－－－－－　終了　－－－－－－－－－－－")
+if __name__ == "__main__":
+    load_Pattern()
+    print("END")
+    try:
+        while True:
+            s = input()
+            print(f"Request <{s}>")
+            r = "RETURN:"
+            if s.startswith("TALK:"):
+                w = s.split(":",3)
+                if w[1] in pattern:
+                    (sim,index) = GetMost(w[2],type=w[1])
+                    print(f"Most Similar is {w[2]} <{sim}> {pattern[w[1]][index][2]} => {pattern[w[1]][index][1]}")
+                    r += f"Most Similar is {w[2]} <{sim}> {pattern[w[1]][index][2]} => {pattern[w[1]][index][1]}" if sim < min_sim else pattern["talk"][index][1]
+            elif s.startswith("EXIT"):
+                break
+            elif s.startswith("RELOAD"):
+                load_Pattern()
+            elif s.startswith("RELEARN"):
+                learning_Model()
+            elif s.startswith("SET"):
+                w = s.split(":",3)
+                AddDictionaly(key=w[2],value=w[3],type=w[1])
+            else:
+                (sim,index) = GetMost(s)
+                print(f"Most Similar is {s} <{sim}> {pattern['talk'][index][2]} => {pattern['talk'][index][1]}")
+                r += f"Most Similar is {s} <{sim}> {pattern['talk'][index][2]} => {pattern['talk'][index][1]}" if sim < min_sim else pattern["talk"][index][1]
+            print("Request Waiting")
+            print(r)
+    except Exception:
+        messagebox.showerror("Tsukumo Brain",f"ERROR:<{sys.exc_info()}>")
+    messagebox.showerror("Tsukumo Brain","終了")
