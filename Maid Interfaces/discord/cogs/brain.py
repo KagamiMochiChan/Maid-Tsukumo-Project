@@ -36,14 +36,20 @@ class Brain(commands.Cog, name="BRAIN"):
             return
         else:
             L.W(f"Receive <{msg.content}>")
-            (tf, ti) = core.GetMost(word=msg.content)
+            (tf, ti) = core.GetMost(word=msg.content,type="talks")
             (df, di) = core.GetMost(word=msg.content, type="discord")
-            (sim, index, dic) = (tf, ti, "talk") if tf > df else (df, di, "discord")
+            (sim, index, dic) = (tf,ti,"talk")if tf > df else (df, di, "discord")
+            if index < 0:
+                index = -index-1
+                dic = "live_talk"
             if sim < core.min_sim:
                 await msg.channel.send(
                     f"最小値{core.min_sim}を満たしませんでした\n> **最類似**\n> **辞書** {dic} **Index** {index}\n> **Cos類似度** {sim}\n> **Key** {core.pattern[dic][index][2]} **Value** {core.pattern[dic][index][1]}")
+                L.W(f"最小値{core.min_sim}を満たしませんでした\n> **最類似**\n> **辞書** {dic} **Index** {index}\n> **Cos類似度** {sim}\n> **Key** {core.pattern[dic][index][2]} **Value** {core.pattern[dic][index][1]}")
             else:
                 await msg.channel.send(core.pattern[dic][index][1])
+                core.AddDictionaly(key=msg.content,value=core.pattern[dic][index][1],type="live_talk")
+                L.W(f"Send <{core.pattern[dic][index][1]}>")
 
     @commands.command(name="add")
     @commands.is_owner()
